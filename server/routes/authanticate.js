@@ -1,6 +1,7 @@
 const router =  require("express").Router();
 const User = require ("../models/User");
 const bcrypt = require("bcrypt");
+const { renderSync } = require("node-sass");
 
 // register - create new
 router.post("/register", async(req,res)=>{
@@ -43,5 +44,23 @@ res.status(500).json(err)
 }
 })
 
+// login process ...send user info
+router.post("/login", async(req, res)=>{
+try{  // check to find user 
+const user = await User.findOne({username: req.body.username});
+!user && res.status(400).json("wrong credientials");
+
+ // check password is correct, compare and encypt 
+ const validated = await bcrypt.compare(req.body.password);
+ // if wrong password 
+ !validated && res.status(400).json("wrong credientials")
+ // if password/user name is correct
+ const{password, ...others} = user._doc;
+ res.status(200).json(others);
+}
+catch(err){
+  res.status(500).json(err);
+}
+})
 
 module.exports = router;
