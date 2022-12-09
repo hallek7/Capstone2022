@@ -7,32 +7,36 @@ const userRoute = require("./routes/users");
 const adsRoute = require("./routes/ads");
 const typeRoute = require("./routes/types");
 const multer = require("multer");
+const path = require("path");
 
-dotenv.config ();
+dotenv.config();
 app.use(express.json());
+app.use("/images", express.static(path.join(__dirname, "/images")));
 
-mongoose.connect(process.env.MONGO_URL,{
-useNewUrlParser: true,
-useUnifiedTopology: true,
-})
-.then(console.log("Connected to MongoDB"))
-.catch(err=>console.log(err));
+mongoose
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    //useFindAndModify:true
 
-// create a storage to take file and save into images folder
-const storage = multer.diskStorage({
+  })
+  .then(console.log("Connected to MongoDB"))
+  .catch((err) => console.log(err));
+
+  const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, "images");
     },
     filename: (req, file, cb) => {
-      cb(null,"test" ); //req.body.name
+      cb(null, req.body.name);
     },
   });
- //upload file/image 
- const upload = multer({storage: storage});
- app.post("/server/upload", upload.single("file"), (req, res) => {
-   res.status(200).json("File has been uploaded");
- });
-
+  
+const upload = multer({ storage: storage });
+app.post("/server/upload", upload.single("file"), (req, res) => {
+  res.status(200).json("File has been uploaded");
+});
+ 
 app.use("/server/authanticate",authRoute);
 app.use("/server/users", userRoute);
 app.use("/server/ads", adsRoute);
@@ -42,3 +46,4 @@ app.listen (5000, ()=>{
 console.log("Server is running now");
 });
 
+console.disableYellowBox = true; 

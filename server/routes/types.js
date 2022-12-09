@@ -1,4 +1,4 @@
-const router =  require("express").Router();
+const router = require("express").Router();
 const Types = require("../models/Types");
 const Type = require("../models/Types");
 
