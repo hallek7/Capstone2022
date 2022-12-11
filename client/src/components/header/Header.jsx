@@ -4,8 +4,8 @@ function Header() {
   return (
     <div className="header">
       <div className="headerTitles">
-        <span className="headerTitleSm">React & Node</span>
-        <span className="headerTitleLg">BLOG</span>
+        <span className="headerTitleSm">Pet Sitter</span>
+        <span className="headerTitleLg">App</span>
       </div>
       <img
         className="headerImg"
