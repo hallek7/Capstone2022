@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { ContextProvider } from './userverif/Context';
 
 ReactDOM.render(
-  <React.StrictMode>
+<React.StrictMode>
+<ContextProvider>  
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+</ContextProvider>
+</React.StrictMode>,
+document.getElementById('root')
 );
