@@ -42,8 +42,21 @@ app.use("/server/users", userRoute);
 app.use("/server/ads", adsRoute);
 app.use("/server/types", typeRoute);
 
+// server production 
+if(process.env.NODE_ENV === "production"){
+  app.use(express.static(path.join("client/build")));
+  app.get("*", (req, res) => {res.sendFile(path.resolve(__dirname,'client', 'build', 'index.html'))
+});
+}
+
+
+
 app.listen (5000, ()=>{
 console.log("Server is running now");
 });
 
+<<<<<<< HEAD
 console.disableYellowBox = true; 
+=======
+ 
+>>>>>>> 9663d2d30174ce36d05e8402d28c250ba4fc2f2b
